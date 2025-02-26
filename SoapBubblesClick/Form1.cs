@@ -21,9 +21,14 @@ namespace SoapBubblesClick
             //Bubbleの親コンテナはフォームに設定
             bubble.Parent = this;
 
-            BackGround backGround = new BackGround();
+            //タイマーの設定
+            Timer timer = new Timer();
+            timer.Interval = 1000;
+            //timer.Tick += bubble.MoveEvent;
+            timer.Start();
+
+            //BackGround backGround = new BackGround();
             int score;
-            //
             int rimainTime;
 
             //概要のコメント
