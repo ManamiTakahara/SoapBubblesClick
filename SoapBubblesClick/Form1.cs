@@ -22,10 +22,7 @@ namespace SoapBubblesClick
             bubble.Parent = this;
 
             //タイマーの設定
-            Timer timer = new Timer();
-            timer.Interval = 1000;
-            timer.Tick += bubble.MoveEvent;
-            timer.Start();
+            //counter = new Counter();
 
             int score;
             int rimainTime;
@@ -34,6 +31,7 @@ namespace SoapBubblesClick
             //シャボン玉の動き
             //得点が加算される
             //時間が減る
+            
             //ゲームオーバーの判定
 
         }
