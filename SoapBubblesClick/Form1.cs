@@ -27,7 +27,6 @@ namespace SoapBubblesClick
             //timer.Tick += bubble.MoveEvent;
             timer.Start();
 
-            //BackGround backGround = new BackGround();
             int score;
             int rimainTime;
 
