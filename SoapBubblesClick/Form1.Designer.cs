@@ -33,7 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.scoreLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.timerLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,28 +73,28 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.Location = new System.Drawing.Point(640, 25);
+            this.label2.Location = new System.Drawing.Point(602, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 30);
             this.label2.TabIndex = 7;
             this.label2.Text = "Time：";
             // 
-            // label3
+            // timerLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label3.Location = new System.Drawing.Point(745, 25);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 30);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "30";
+            this.timerLabel.AutoSize = true;
+            this.timerLabel.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.timerLabel.Location = new System.Drawing.Point(703, 25);
+            this.timerLabel.Name = "timerLabel";
+            this.timerLabel.Size = new System.Drawing.Size(41, 30);
+            this.timerLabel.TabIndex = 8;
+            this.timerLabel.Text = "30";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.scoreLabel);
             this.Controls.Add(this.label1);
@@ -113,7 +113,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label scoreLabel;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label timerLabel;
     }
 }
 

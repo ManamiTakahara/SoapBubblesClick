@@ -24,7 +24,7 @@ namespace SoapBubblesClick
             //タイマーの設定
             Timer timer = new Timer();
             timer.Interval = 1000;
-            timer.Tick += bubble;
+            timer.Tick += bubble.MoveEvent;
             timer.Start();
 
             int score;

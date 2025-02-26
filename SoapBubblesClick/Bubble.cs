@@ -22,7 +22,7 @@ namespace SoapBubblesClick
         public void Move()
         {
             //PicthreBoxの座標（Topプロパティ）を更新
-            Top -= 10;
+            Top += 10;
         }
 
         //イベントハンドラとして使用するためのラッパーメソッド
