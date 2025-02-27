@@ -36,6 +36,7 @@
             this.timerLabel = new System.Windows.Forms.Label();
             this.bubblePicture1 = new System.Windows.Forms.PictureBox();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
+            this.gameTimer2 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bubblePicture1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,6 +96,10 @@
             // 
             this.gameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
             // 
+            // gameTimer2
+            // 
+            this.gameTimer2.Tick += new System.EventHandler(this.GameTimer2_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -125,6 +130,7 @@
         private System.Windows.Forms.Label timerLabel;
         private System.Windows.Forms.PictureBox bubblePicture1;
         private System.Windows.Forms.Timer gameTimer;
+        private System.Windows.Forms.Timer gameTimer2;
     }
 }
 

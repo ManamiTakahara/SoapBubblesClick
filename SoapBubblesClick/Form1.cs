@@ -49,7 +49,12 @@ namespace SoapBubblesClick
             }
             
         }
+        private void GameTimer2_Tick(object sender, EventArgs e)
+        {
 
+            counter.CountDoun();
+            timerLabel.Text = counter.Value2.ToString();
+        }
         private void ResetUpObject()
         {
             bubblePicture1.Top = bubblePicture1.Height;
@@ -71,7 +76,5 @@ namespace SoapBubblesClick
             counter.Intcrement();
             scoreLabel.Text = counter.Value.ToString(); 
         }
-
-       
     }
 }
