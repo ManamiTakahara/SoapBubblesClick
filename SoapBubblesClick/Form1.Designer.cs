@@ -84,7 +84,7 @@
             this.bubblePicture1.BackColor = System.Drawing.Color.Transparent;
             this.bubblePicture1.Image = ((System.Drawing.Image)(resources.GetObject("bubblePicture1.Image")));
             this.bubblePicture1.InitialImage = null;
-            this.bubblePicture1.Location = new System.Drawing.Point(40, 381);
+            this.bubblePicture1.Location = new System.Drawing.Point(358, 383);
             this.bubblePicture1.Name = "bubblePicture1";
             this.bubblePicture1.Size = new System.Drawing.Size(68, 66);
             this.bubblePicture1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
