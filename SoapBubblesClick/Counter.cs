@@ -12,12 +12,12 @@ namespace SoapBubblesClick
 
         public void Intcrement()
         {
-            Value--;
+            Value += 50;
         }
 
         public void Reset()
         { 
-            Value = 30;
+            Value = 0;
         }
 
     }

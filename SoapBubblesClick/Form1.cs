@@ -12,14 +12,14 @@ namespace SoapBubblesClick
 {
     public partial class Form1 : Form
     {
+        private Counter counter;
         public Form1()
         {
             InitializeComponent();
+            counter = new Counter();
+            gameTimer.Tick += GameTimer_Tick;
             //変数の宣言
-            //Bubbleインスタンスの生成
-            Bubble bubble = new Bubble();
-            //Bubbleの親コンテナはフォームに設定
-            bubble.Parent = this;
+           
 
             //タイマーの設定
             //counter = new Counter();
@@ -35,5 +35,41 @@ namespace SoapBubblesClick
             //ゲームオーバーの判定
 
         }
+
+        private void GameTimer_Tick(object sender, EventArgs e)
+        {
+            int UpSpeed = 3;
+            //シャボン玉を上に移動
+            bubblePicture1.Top -= UpSpeed;
+
+            //画面上に到達した場合、再度下部ランダム位置に配置
+            if (bubblePicture1.Top > this.PreferredSize.Height)
+            {
+                ResetUpObject();
+            }
+            
+        }
+
+        private void ResetUpObject()
+        {
+            bubblePicture1.Top = bubblePicture1.Height;
+            Random rnd = new Random();
+            bubblePicture1.Left =rnd.Next(0,bubblePicture1.Width + bubblePicture1.Width);
+        }
+
+        private void Form_Load(object sender, EventArgs e)
+        {
+            gameTimer.Interval = 50;//Tickイベントの発生
+            gameTimer.Start();
+            ResetUpObject();
+        }
+
+        private void BubblePicture_Clik(object sender, EventArgs e)
+        {
+            ResetUpObject();
+            scoreLabel.Text = counter.Value.ToString(); 
+        }
+
+       
     }
 }
