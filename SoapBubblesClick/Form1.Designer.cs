@@ -98,6 +98,7 @@
             // 
             // gameTimer2
             // 
+            this.gameTimer2.Interval = 1000;
             this.gameTimer2.Tick += new System.EventHandler(this.GameTimer2_Tick);
             // 
             // Form1

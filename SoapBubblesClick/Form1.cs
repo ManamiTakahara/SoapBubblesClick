@@ -13,20 +13,17 @@ namespace SoapBubblesClick
     public partial class Form1 : Form
     {
         private Counter counter;
+        private int timar = 30;
         public Form1()
         {
             InitializeComponent();
             counter = new Counter();
             gameTimer.Tick += GameTimer_Tick;
+            gameTimer2.Start();
             //変数の宣言
            
 
             //タイマーの設定
-            //counter = new Counter();
-
-            int score;
-            int rimainTime;
-
             //概要のコメント
             //シャボン玉の動き
             //得点が加算される
@@ -51,9 +48,13 @@ namespace SoapBubblesClick
         }
         private void GameTimer2_Tick(object sender, EventArgs e)
         {
-
-            counter.CountDoun();
-            timerLabel.Text = counter.Value2.ToString();
+            timar--;
+            timerLabel.Text = timar.ToString();
+            if (timar <= 0)
+            {
+                gameTimer2.Stop();
+            }
+            
         }
         private void ResetUpObject()
         {
@@ -69,6 +70,7 @@ namespace SoapBubblesClick
             ResetUpObject();
         }
 
+        // シャボン玉をクリックすると加算する
         private void BubblePicture_Clik(object sender, EventArgs e)
         {
             
