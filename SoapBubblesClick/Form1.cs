@@ -49,9 +49,10 @@ namespace SoapBubblesClick
                 Location = new Point(x, y),
                 BackColor = Color.Transparent,
                 Image = CreateBubbulImage(size),
-                SizeMode = PictureBoxSizeModo.StretchImeage,
+                SizeMode = PictureBoxSizeMode.StretchImage,
                 Tag = "bubble"
             };
+
             bubble.Click += Bubble_Click;
             Controls.Add( bubble );
         }
@@ -92,6 +93,7 @@ namespace SoapBubblesClick
             timerLabel.Text = timar.ToString();
             if (timar <= 0)
             {
+                gameTimer.Stop();
                 gameTimer2.Stop();
             }
             

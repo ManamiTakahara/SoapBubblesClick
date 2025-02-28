@@ -80,6 +80,7 @@
             // 
             // gameTimer
             // 
+            this.gameTimer.Interval = 1000;
             this.gameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
             // 
             // gameTimer2
