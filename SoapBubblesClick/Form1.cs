@@ -40,7 +40,7 @@ namespace SoapBubblesClick
         {
             int UpSpeed = 3;
             //シャボン玉を上に移動
-            bubblePicture1.Top += UpSpeed;
+            bubblePicture1.Top -= UpSpeed;
 
             //画面上に到達した場合、再度下部ランダム位置に配置
             if (bubblePicture1.Top > this.PreferredSize.Height)
