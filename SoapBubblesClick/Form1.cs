@@ -12,40 +12,80 @@ namespace SoapBubblesClick
 {
     public partial class Form1 : Form
     {
+        // シャボン玉
+        private Random random = new Random();
+        // スコア
         private Counter counter;
+        //タイマー
         private int timar = 30;
         public Form1()
         {
             InitializeComponent();
             counter = new Counter();
             gameTimer.Tick += GameTimer_Tick;
+            gameTimer.Start();
             gameTimer2.Start();
             //変数の宣言
-           
-
-            //タイマーの設定
+         
             //概要のコメント
-            //シャボン玉の動き
-            //得点が加算される
-            //時間が減る
-            
-            //ゲームオーバーの判定
 
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            int UpSpeed = 3;
-            //シャボン玉を上に移動
-            bubblePicture1.Top -= UpSpeed;
+            CreateBubble();
 
-            //画面上に到達した場合、再度下部ランダム位置に配置
-            if (bubblePicture1.Top > this.PreferredSize.Height)
-            {
-                ResetUpObject();
-            }
-            
         }
+
+        private void CreateBubble()
+        {
+            // シャボン玉のサイズ
+            int size = random.Next(30, 60);
+            int x = random.Next(ClientSize.Width - size);
+            int y = random.Next(ClientSize.Height - size);
+            PictureBox bubble = new PictureBox
+            {
+                Size = new Size(size, size),
+                Location = new Point(x, y),
+                BackColor = Color.Transparent,
+                Image = CreateBubbulImage(size),
+                SizeMode = PictureBoxSizeModo.StretchImeage,
+                Tag = "bubble"
+            };
+            bubble.Click += Bubble_Click;
+            Controls.Add( bubble );
+        }
+
+        // シャボン玉をクリックしたときの処理
+        private void Bubble_Click(object sender, EventArgs e)
+        {
+            PictureBox bubble = sender as PictureBox;
+            if (bubble != null)
+            {
+                Controls.Remove( bubble ); 
+                bubble.Dispose();
+                counter.Intcrement();
+                scoreLabel.Text = counter.Value.ToString();
+            }
+        }
+
+        private Bitmap CreateBubbulImage(int size)
+        {
+            Bitmap bmp = new Bitmap(size, size);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                using(Brush brush = new System.Drawing.Drawing2D.LinearGradientBrush
+                (new Rectangle(0, 0, size, size),
+                Color.LightBlue, Color.Wheat, 45))
+                {
+                    g.FillRectangle(brush, 0, 0, size, size);
+                }
+                g.DrawEllipse(Pens.Blue, 0, 0, size - 1, size - 1);
+            }
+            return bmp;
+        }
+        // タイマーの設定
         private void GameTimer2_Tick(object sender, EventArgs e)
         {
             timar--;
@@ -56,27 +96,32 @@ namespace SoapBubblesClick
             }
             
         }
-        private void ResetUpObject()
-        {
-            bubblePicture1.Top = bubblePicture1.Height;
-            Random rnd = new Random();
-            bubblePicture1.Left =rnd.Next(0,bubblePicture1.Width + bubblePicture1.Width);
-        }
+        
 
         private void Form_Load(object sender, EventArgs e)
         {
             gameTimer.Interval = 50;//Tickイベントの発生
             gameTimer.Start();
-            ResetUpObject();
+            
         }
 
         // シャボン玉をクリックすると加算する
         private void BubblePicture_Clik(object sender, EventArgs e)
         {
             
-            ResetUpObject();
-            counter.Intcrement();
-            scoreLabel.Text = counter.Value.ToString(); 
+        }
+
+        //ゲームオーバーの判定
+        private bool IsGameOver()
+        {
+            if (timar == 0)
+            { 
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

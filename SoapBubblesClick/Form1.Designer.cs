@@ -34,10 +34,8 @@
             this.scoreLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.timerLabel = new System.Windows.Forms.Label();
-            this.bubblePicture1 = new System.Windows.Forms.PictureBox();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.gameTimer2 = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.bubblePicture1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -80,18 +78,6 @@
             this.timerLabel.TabIndex = 8;
             this.timerLabel.Text = "30";
             // 
-            // bubblePicture1
-            // 
-            this.bubblePicture1.BackColor = System.Drawing.Color.Transparent;
-            this.bubblePicture1.Image = ((System.Drawing.Image)(resources.GetObject("bubblePicture1.Image")));
-            this.bubblePicture1.InitialImage = null;
-            this.bubblePicture1.Location = new System.Drawing.Point(358, 383);
-            this.bubblePicture1.Name = "bubblePicture1";
-            this.bubblePicture1.Size = new System.Drawing.Size(68, 66);
-            this.bubblePicture1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.bubblePicture1.TabIndex = 9;
-            this.bubblePicture1.TabStop = false;
-            // 
             // gameTimer
             // 
             this.gameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
@@ -108,7 +94,6 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.bubblePicture1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.scoreLabel);
@@ -116,9 +101,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form_Load);
-            this.Click += new System.EventHandler(this.BubblePicture_Clik);
-            ((System.ComponentModel.ISupportInitialize)(this.bubblePicture1)).EndInit();
+            this.Load += new System.EventHandler(this.GameTimer_Tick);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,7 +112,6 @@
         private System.Windows.Forms.Label scoreLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label timerLabel;
-        private System.Windows.Forms.PictureBox bubblePicture1;
         private System.Windows.Forms.Timer gameTimer;
         private System.Windows.Forms.Timer gameTimer2;
     }
