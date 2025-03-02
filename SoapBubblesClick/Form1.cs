@@ -15,16 +15,15 @@ namespace SoapBubblesClick
         // シャボン玉
         private Random random = new Random();
         // スコア
-        private Counter counter;
+        private int score = 0;
         //タイマー
         private int timar = 30; //残り時間（秒）
         private bool isGameOver = false; //ゲーム終了判定
         public Form1()
         {
             InitializeComponent();
-            counter = new Counter();
-            gameTimer.Tick += GameTimer_Tick;
-            gameTimer.Start();
+            moveTimer.Tick += GameTimer_Tick;
+            moveTimer.Start();
             gameTimer2.Start();
             //変数の宣言
 
@@ -35,7 +34,6 @@ namespace SoapBubblesClick
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             CreateBubble();
-
         }
 
         // タイマーの設定
@@ -55,38 +53,67 @@ namespace SoapBubblesClick
 
         private void CreateBubble()
         {
-            // シャボン玉のサイズ
             int size = random.Next(30, 60);
             int x = random.Next(ClientSize.Width - size);
-            int y = random.Next(ClientSize.Height - size);
+            int y = ClientSize.Height - size; // 下から発生
+
             PictureBox bubble = new PictureBox
             {
                 Size = new Size(size, size),
                 Location = new Point(x, y),
                 BackColor = Color.Transparent,
-                Image = CreateBubbulImage(size),
+                Image = CreateBubbleImage(size),
                 SizeMode = PictureBoxSizeMode.StretchImage,
-                Tag = "bubble"
+                Tag = size
             };
+
+            // シャボン玉用のタイマーを作成
+            Timer moveTimer = new Timer();
+            moveTimer.Interval = 50; // 0.05秒ごとに移動
+            moveTimer.Tick += (s, e) => MoveBubble(bubble, moveTimer);
+
+            moveTimer.Start(); // タイマー開始
+            bubble.Tag = (size, moveTimer); // 後で停止できるようにタイマーを保存
 
             bubble.Click += Bubble_Click;
             Controls.Add(bubble);
         }
 
-        // シャボン玉をクリックしたときの処理
         private void Bubble_Click(object sender, EventArgs e)
         {
+            if (isGameOver) return; // ゲーム終了時はクリック不可
+
             PictureBox bubble = sender as PictureBox;
             if (bubble != null)
             {
                 Controls.Remove(bubble);
                 bubble.Dispose();
-                counter.Intcrement();
-                scoreLabel.Text = counter.Value.ToString();
+                score++;
+                scoreLabel.Text = "Score: " + score;
             }
         }
 
-        private Bitmap CreateBubbulImage(int size)
+
+
+        private void MoveBubble(PictureBox bubble, Timer moveTimer)
+        {
+            if (bubble == null || isGameOver) return;
+
+            // 上へ移動
+            bubble.Top -= 5;
+
+            // 画面上端に到達したら削除
+            if (bubble.Top + bubble.Height < 0)
+            {
+                moveTimer.Stop();
+                moveTimer.Dispose();
+                Controls.Remove(bubble);
+                bubble.Dispose();
+            }
+        }
+
+
+        private Bitmap CreateBubbleImage(int size)
         {
             Bitmap bmp = new Bitmap(size, size);
             using (Graphics g = Graphics.FromImage(bmp))
@@ -103,38 +130,33 @@ namespace SoapBubblesClick
             return bmp;
         }
 
-
-
         private void Form_Load(object sender, EventArgs e)
         {
-            gameTimer.Interval = 50;//Tickイベントの発生
-            gameTimer.Start();
-
-        }
-
-        // シャボン玉をクリックすると加算する
-        private void BubblePicture_Clik(object sender, EventArgs e)
-        {
+            moveTimer.Interval = 50;//Tickイベントの発生
+            moveTimer.Start();
 
         }
 
         //ゲームオーバーの判定
         private void GameOver()
         {
-            gameTimer2.Stop(); //シャボン玉の生成を停止
-            gameTimer.Stop(); //ゲームの終了
+            gameTimer2.Stop();
+            moveTimer.Stop();
             isGameOver = true;
 
-            //全てのシャボン玉をクリックできないようにする
             foreach (Control control in Controls)
             {
-                if (control is PictureBox && control.Tag?.ToString() == "bubble")
+                if (control is PictureBox bubble && bubble.Tag is Timer moveTimer)
                 {
-                    control.Enabled = false; //無効化
+                    moveTimer.Stop();
+                    moveTimer.Dispose();
+                    bubble.Enabled = false; // クリック無効
                 }
             }
-            MessageBox.Show("Time's Up! \nScore: " + counter.Value, "Game Over");
+
+            MessageBox.Show("Time's up! Game Over!\nScore: " + score, "Game Over");
         }
+
     }
 }
 
