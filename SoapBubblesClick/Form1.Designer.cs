@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.scoreLabel = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.timerLabel = new System.Windows.Forms.Label();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.gameTimer2 = new System.Windows.Forms.Timer(this.components);
@@ -42,9 +41,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label1.Location = new System.Drawing.Point(35, 25);
+            this.label1.Location = new System.Drawing.Point(44, 30);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 30);
+            this.label1.Size = new System.Drawing.Size(87, 36);
             this.label1.TabIndex = 5;
             this.label1.Text = "得点：";
             // 
@@ -52,31 +52,23 @@
             // 
             this.scoreLabel.AutoSize = true;
             this.scoreLabel.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.scoreLabel.Location = new System.Drawing.Point(133, 25);
+            this.scoreLabel.Location = new System.Drawing.Point(166, 30);
+            this.scoreLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.scoreLabel.Name = "scoreLabel";
-            this.scoreLabel.Size = new System.Drawing.Size(27, 30);
+            this.scoreLabel.Size = new System.Drawing.Size(31, 36);
             this.scoreLabel.TabIndex = 6;
             this.scoreLabel.Text = "0";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.Location = new System.Drawing.Point(595, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(85, 30);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Time：";
             // 
             // timerLabel
             // 
             this.timerLabel.AutoSize = true;
             this.timerLabel.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.timerLabel.Location = new System.Drawing.Point(709, 25);
+            this.timerLabel.Location = new System.Drawing.Point(813, 30);
+            this.timerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.timerLabel.Name = "timerLabel";
-            this.timerLabel.Size = new System.Drawing.Size(41, 30);
+            this.timerLabel.Size = new System.Drawing.Size(128, 36);
             this.timerLabel.TabIndex = 8;
-            this.timerLabel.Text = "30";
+            this.timerLabel.Text = "Time: 30";
             // 
             // gameTimer
             // 
@@ -90,16 +82,15 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(1000, 540);
             this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.scoreLabel);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.GameTimer_Tick);
@@ -111,7 +102,6 @@
         #endregion
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label scoreLabel;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label timerLabel;
         private System.Windows.Forms.Timer gameTimer;
         private System.Windows.Forms.Timer gameTimer2;
