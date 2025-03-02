@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SoapBubblesClick
@@ -22,22 +16,18 @@ namespace SoapBubblesClick
         public Form1()
         {
             InitializeComponent();
-            moveTimer.Tick += GameTimer_Tick;
-            moveTimer.Start();
-            gameTimer2.Start();
-            //変数の宣言
-
-            //概要のコメント
-
+            timer1.Tick += Timer1_Tick;
+            timer1.Start();
+            gameTimer.Start();
         }
 
-        private void GameTimer_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             CreateBubble();
         }
 
         // タイマーの設定
-        private void GameTimer2_Tick(object sender, EventArgs e)
+        private void GameTimer_Tick(object sender, EventArgs e)
         {
 
             if (timar > 0)
@@ -73,7 +63,8 @@ namespace SoapBubblesClick
             moveTimer.Tick += (s, e) => MoveBubble(bubble, moveTimer);
 
             moveTimer.Start(); // タイマー開始
-            bubble.Tag = (size, moveTimer); // 後で停止できるようにタイマーを保存
+            // シャボン玉作成時にタプルとして保存
+            bubble.Tag = (Size: size, MoveTimer: moveTimer);
 
             bubble.Click += Bubble_Click;
             Controls.Add(bubble);
@@ -81,18 +72,30 @@ namespace SoapBubblesClick
 
         private void Bubble_Click(object sender, EventArgs e)
         {
-            if (isGameOver) return; // ゲーム終了時はクリック不可
+            // 1. ゲーム終了状態の場合は処理を中断
+            if (isGameOver) return;
 
+            // 2. クリックされたオブジェクトを PictureBox として取得
             PictureBox bubble = sender as PictureBox;
-            if (bubble != null)
+            if (bubble.Tag is ValueTuple<int, Timer> bubbleData)
             {
+                int size = bubbleData.Item1; // タプルの1番目の値（サイズ）
+                // ※または、C# 7.0以降なら、以下のように名前付きタプルも使えます：
+                // var (size, timer) = ((int Size, Timer MoveTimer))bubble.Tag;
+
+                // 4. 得点計算: 小さいシャボン玉ほど高得点になるように計算
+                // 例として、60をサイズで割って得点を決定しています
+                int points = 1500 / size;
+                score += points;
+
+                // 5. スコア表示の更新
+                scoreLabel.Text = "Score: " + score;
+
+                // 6. シャボン玉を画面から削除し、リソースを解放
                 Controls.Remove(bubble);
                 bubble.Dispose();
-                score++;
-                scoreLabel.Text = "Score: " + score;
             }
         }
-
 
 
         private void MoveBubble(PictureBox bubble, Timer moveTimer)
@@ -130,18 +133,12 @@ namespace SoapBubblesClick
             return bmp;
         }
 
-        private void Form_Load(object sender, EventArgs e)
-        {
-            moveTimer.Interval = 50;//Tickイベントの発生
-            moveTimer.Start();
-
-        }
 
         //ゲームオーバーの判定
         private void GameOver()
         {
-            gameTimer2.Stop();
-            moveTimer.Stop();
+            gameTimer.Stop();
+            timer1.Stop();
             isGameOver = true;
 
             foreach (Control control in Controls)
@@ -156,7 +153,6 @@ namespace SoapBubblesClick
 
             MessageBox.Show("Time's up! Game Over!\nScore: " + score, "Game Over");
         }
-
     }
 }
 

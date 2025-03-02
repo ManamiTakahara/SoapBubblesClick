@@ -33,12 +33,14 @@
             this.scoreLabel = new System.Windows.Forms.Label();
             this.timerLabel = new System.Windows.Forms.Label();
             this.moveTimer = new System.Windows.Forms.Timer(this.components);
-            this.gameTimer2 = new System.Windows.Forms.Timer(this.components);
+            this.gameTimer = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // scoreLabel
             // 
             this.scoreLabel.AutoSize = true;
+            this.scoreLabel.BackColor = System.Drawing.Color.Transparent;
             this.scoreLabel.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.scoreLabel.Location = new System.Drawing.Point(48, 30);
             this.scoreLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -50,6 +52,7 @@
             // timerLabel
             // 
             this.timerLabel.AutoSize = true;
+            this.timerLabel.BackColor = System.Drawing.Color.Transparent;
             this.timerLabel.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.timerLabel.Location = new System.Drawing.Point(721, 30);
             this.timerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -61,12 +64,12 @@
             // moveTimer
             // 
             this.moveTimer.Interval = 1000;
-            this.moveTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
+            this.moveTimer.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
-            // gameTimer2
+            // gameTimer
             // 
-            this.gameTimer2.Interval = 1000;
-            this.gameTimer2.Tick += new System.EventHandler(this.GameTimer2_Tick);
+            this.gameTimer.Interval = 1000;
+            this.gameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
             // 
             // Form1
             // 
@@ -89,7 +92,8 @@
         private System.Windows.Forms.Label scoreLabel;
         private System.Windows.Forms.Label timerLabel;
         private System.Windows.Forms.Timer moveTimer;
-        private System.Windows.Forms.Timer gameTimer2;
+        private System.Windows.Forms.Timer gameTimer;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
