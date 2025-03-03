@@ -53,17 +53,16 @@ namespace SoapBubblesClick
                 Location = new Point(x, y),
                 BackColor = Color.Transparent,
                 Image = CreateBubbleImage(size),
-                SizeMode = PictureBoxSizeMode.StretchImage,
-                Tag = size
+                SizeMode = PictureBoxSizeMode.StretchImage
             };
 
-            // シャボン玉用のタイマーを作成
+            // シャボン玉用の移動タイマーを作成
             Timer moveTimer = new Timer();
-            moveTimer.Interval = 50; // 0.05秒ごとに移動
+            moveTimer.Interval = 50; // 50ミリ秒ごとに移動
             moveTimer.Tick += (s, e) => MoveBubble(bubble, moveTimer);
+            moveTimer.Start();
 
-            moveTimer.Start(); // タイマー開始
-            // シャボン玉作成時にタプルとして保存
+            // タプルとしてサイズとタイマーの両方をTagに保存
             bubble.Tag = (Size: size, MoveTimer: moveTimer);
 
             bubble.Click += Bubble_Click;
@@ -77,19 +76,23 @@ namespace SoapBubblesClick
 
             // 2. クリックされたオブジェクトを PictureBox として取得
             PictureBox bubble = sender as PictureBox;
-            if (bubble.Tag is ValueTuple<int, Timer> bubbleData)
+            if (bubble != null)
             {
-                int size = bubbleData.Item1; // タプルの1番目の値（サイズ）
-                // ※または、C# 7.0以降なら、以下のように名前付きタプルも使えます：
-                // var (size, timer) = ((int Size, Timer MoveTimer))bubble.Tag;
+                // タプルからサイズを取得
+                if (bubble.Tag is ValueTuple<int, Timer> bubbleData)
+                {
+                    int size = bubbleData.Item1;  // タプルの1番目がサイズ
+                    int points = 1500 / size;
+                    score += points;
+                    scoreLabel.Text = "Score: " + score;
+                }
 
-                // 4. 得点計算: 小さいシャボン玉ほど高得点になるように計算
-                // 例として、60をサイズで割って得点を決定しています
-                int points = 1500 / size;
-                score += points;
-
-                // 5. スコア表示の更新
-                scoreLabel.Text = "Score: " + score;
+                //　シャボン玉の移動タイマーも停止
+                if (bubble.Tag is ValueTuple<int, Timer> date)
+                {
+                    date.Item2.Stop();
+                    date.Item2.Dispose();
+                }
 
                 // 6. シャボン玉を画面から削除し、リソースを解放
                 Controls.Remove(bubble);
@@ -151,7 +154,7 @@ namespace SoapBubblesClick
                 }
             }
 
-            MessageBox.Show("Time's up! Game Over!\nScore: " + score, "Game Over");
+            MessageBox.Show("Time's up! \nScore: " + score, "Game Over");
         }
     }
 }
