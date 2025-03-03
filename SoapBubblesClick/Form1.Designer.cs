@@ -42,10 +42,9 @@
             this.scoreLabel.AutoSize = true;
             this.scoreLabel.BackColor = System.Drawing.Color.Transparent;
             this.scoreLabel.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.scoreLabel.Location = new System.Drawing.Point(48, 30);
-            this.scoreLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.scoreLabel.Location = new System.Drawing.Point(38, 25);
             this.scoreLabel.Name = "scoreLabel";
-            this.scoreLabel.Size = new System.Drawing.Size(120, 36);
+            this.scoreLabel.Size = new System.Drawing.Size(100, 30);
             this.scoreLabel.TabIndex = 6;
             this.scoreLabel.Text = "Score: 0";
             // 
@@ -54,10 +53,9 @@
             this.timerLabel.AutoSize = true;
             this.timerLabel.BackColor = System.Drawing.Color.Transparent;
             this.timerLabel.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.timerLabel.Location = new System.Drawing.Point(721, 30);
-            this.timerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.timerLabel.Location = new System.Drawing.Point(577, 25);
             this.timerLabel.Name = "timerLabel";
-            this.timerLabel.Size = new System.Drawing.Size(128, 36);
+            this.timerLabel.Size = new System.Drawing.Size(108, 30);
             this.timerLabel.TabIndex = 8;
             this.timerLabel.Text = "Time: 30";
             // 
@@ -73,14 +71,14 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1000, 540);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.scoreLabel);
-            this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
