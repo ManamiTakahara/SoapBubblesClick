@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Windows.Forms;
 
 namespace SoapBubblesClick
@@ -13,6 +15,9 @@ namespace SoapBubblesClick
         //タイマー
         private int timar = 30; //残り時間（秒）
         private bool isGameOver = false; //ゲーム終了判定
+
+        private string imageFolderPath = @"Images\"; // フォルダーのパス
+
         public Form1()
         {
             InitializeComponent();
@@ -52,9 +57,15 @@ namespace SoapBubblesClick
                 Size = new Size(size, size),
                 Location = new Point(x, y),
                 BackColor = Color.Transparent,
-                Image = CreateBubbleImage(size),
                 SizeMode = PictureBoxSizeMode.StretchImage
             };
+
+            //画像を読み込む
+            string bubbleImagePath = Path.Combine(imageFolderPath, "bubble.png");
+            if (File.Exists(bubbleImagePath))
+            {
+                bubble.Image = Image.FromFile(bubbleImagePath);
+            }
 
             // シャボン玉用の移動タイマーを作成
             Timer moveTimer = new Timer();
@@ -64,8 +75,8 @@ namespace SoapBubblesClick
 
             // タプルとしてサイズとタイマーの両方をTagに保存
             bubble.Tag = (Size: size, MoveTimer: moveTimer);
-
             bubble.Click += Bubble_Click;
+
             Controls.Add(bubble);
         }
 
@@ -95,11 +106,35 @@ namespace SoapBubblesClick
                 }
 
                 // 6. シャボン玉を画面から削除し、リソースを解放
-                Controls.Remove(bubble);
-                bubble.Dispose();
+                PlayPopAnimation(bubble);
             }
         }
 
+        private void PlayPopAnimation(PictureBox bubble)
+        {
+            int frame = 0;
+            Timer animTimer = new Timer { Interval = 100 };
+
+            animTimer.Tick += (s, e) =>
+            {
+                frame++;
+                string popImegePath = Path.Combine(imageFolderPath, $"pop{frame}.png");
+
+                if (File.Exists(popImegePath))
+                {
+                    bubble.Image = Image.FromFile(popImegePath);
+                }
+
+                if (frame >= 3) //3フレームで終了
+                {
+                    animTimer.Stop();
+                    animTimer.Dispose();
+                    Controls.Remove(bubble);
+                    bubble.Dispose();
+                }
+            };
+            animTimer.Start();
+        }
 
         private void MoveBubble(PictureBox bubble, Timer moveTimer)
         {
@@ -117,25 +152,6 @@ namespace SoapBubblesClick
                 bubble.Dispose();
             }
         }
-
-
-        private Bitmap CreateBubbleImage(int size)
-        {
-            Bitmap bmp = new Bitmap(size, size);
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                using (Brush brush = new System.Drawing.Drawing2D.LinearGradientBrush
-                (new Rectangle(0, 0, size, size),
-                Color.LightBlue, Color.Wheat, 45))
-                {
-                    g.FillRectangle(brush, 0, 0, size, size);
-                }
-                g.DrawEllipse(Pens.Blue, 0, 0, size - 1, size - 1);
-            }
-            return bmp;
-        }
-
 
         //ゲームオーバーの判定
         private void GameOver()
