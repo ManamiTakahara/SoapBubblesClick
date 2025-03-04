@@ -80,7 +80,7 @@
             this.Controls.Add(this.scoreLabel);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "BubblGame";
             this.ResumeLayout(false);
             this.PerformLayout();
 

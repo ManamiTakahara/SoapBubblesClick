@@ -75,6 +75,7 @@ namespace SoapBubblesClick
             isGameOver = false;
         }
 
+        //スタートボタンの処理
         private void StartButton_Click(object sender, EventArgs e)
         {
             //スタート画面を非表示
@@ -90,6 +91,7 @@ namespace SoapBubblesClick
             
         }
 
+        //終了ボタンの処理
         private void CloseButton_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -115,6 +117,7 @@ namespace SoapBubblesClick
             }
         }
 
+        //シャボン玉の作成
         private void CreateBubble()
         {
             int size = random.Next(30, 60);
@@ -149,6 +152,7 @@ namespace SoapBubblesClick
             Controls.Add(bubble);
         }
 
+        //シャボン玉をクリックしたときの処理
         private void Bubble_Click(object sender, EventArgs e)
         {
             // 1. ゲーム終了状態の場合は処理を中断
@@ -179,6 +183,7 @@ namespace SoapBubblesClick
             }
         }
 
+        //シャボン玉が消えるときのアニメーション
         private void PlayPopAnimation(PictureBox bubble)
         {
             int frame = 0;
