@@ -8,22 +8,62 @@ namespace SoapBubblesClick
 {
     public partial class Form1 : Form
     {
+        // スタート画面のパネル
+        private Panel startPanel;
+        // スタートボタン
+        private Button startButton;
+        // 終了ボタン
+        private Button closeButton;
+
         // シャボン玉
         private Random random = new Random();
-        // スコア
-        private int score = 0;
-        //タイマー
-        private int timar = 30; //残り時間（秒）
-        private bool isGameOver = false; //ゲーム終了判定
 
         private string imageFolderPath = @"Images\"; // フォルダーのパス
+        private int timar;
+        private bool isGameOver;
+        private int score;
 
         public Form1()
         {
             InitializeComponent();
+            IntalizeStartScreen(); //スタート画面のセットアップ
+        }
+
+        private void IntalizeStartScreen()
+        {
+            startPanel = new Panel()
+            {
+                BackColor = Color.LightBlue
+            };
+
+            // スタートボタン
+            startButton = new Button
+            {
+                Text = "Game Start",
+                Font = new Font("Arial", 16),
+                Size = new Size(200, 50),
+                Location = new Point((ClientSize.Width - 200) / 2, (ClientSize.Height - 50) / 2),
+            };
+            startButton.Click += StartButton_Click;
+
+            //パネルにボタンを追加
+            startPanel.Controls.Add(startButton);
+            Controls.Add(startPanel);
+        }
+
+        private void StartButton_Click(object sender, EventArgs e)
+        {
+            //スタート画面を非表示
+            startPanel.Visible = false;
+
+            //ゲーム開始
+            timar = 30; //残り時間（秒）
+            isGameOver = false; //ゲーム終了判定
+            score = 0;
             timer1.Tick += Timer1_Tick;
             timer1.Start();
             gameTimer.Start();
+            
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
