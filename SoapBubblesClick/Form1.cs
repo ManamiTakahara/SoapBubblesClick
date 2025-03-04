@@ -113,7 +113,7 @@ namespace SoapBubblesClick
         private void PlayPopAnimation(PictureBox bubble)
         {
             int frame = 0;
-            Timer animTimer = new Timer { Interval = 100 };
+            Timer animTimer = new Timer { Interval = 50 };
 
             animTimer.Tick += (s, e) =>
             {

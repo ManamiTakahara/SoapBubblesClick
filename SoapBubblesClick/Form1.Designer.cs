@@ -35,6 +35,8 @@
             this.moveTimer = new System.Windows.Forms.Timer(this.components);
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.startButton = new System.Windows.Forms.Button();
+            this.CloseButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // scoreLabel
@@ -69,6 +71,28 @@
             this.gameTimer.Interval = 1000;
             this.gameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
             // 
+            // startButton
+            // 
+            this.startButton.Font = new System.Drawing.Font("メイリオ", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.startButton.Location = new System.Drawing.Point(296, 197);
+            this.startButton.Name = "startButton";
+            this.startButton.Size = new System.Drawing.Size(176, 44);
+            this.startButton.TabIndex = 9;
+            this.startButton.Text = "Game Stert";
+            this.startButton.UseVisualStyleBackColor = true;
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Font = new System.Drawing.Font("メイリオ", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.CloseButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.CloseButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.CloseButton.Location = new System.Drawing.Point(296, 274);
+            this.CloseButton.Name = "CloseButton";
+            this.CloseButton.Size = new System.Drawing.Size(176, 44);
+            this.CloseButton.TabIndex = 10;
+            this.CloseButton.Text = "終了";
+            this.CloseButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -76,6 +100,8 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.CloseButton);
+            this.Controls.Add(this.startButton);
             this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.scoreLabel);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -92,6 +118,8 @@
         private System.Windows.Forms.Timer moveTimer;
         private System.Windows.Forms.Timer gameTimer;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button startButton;
+        private System.Windows.Forms.Button CloseButton;
     }
 }
 
