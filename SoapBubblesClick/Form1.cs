@@ -31,8 +31,10 @@ namespace SoapBubblesClick
 
         private void IntalizeStartScreen()
         {
+            //スタート画面用のパネル
             startPanel = new Panel()
             {
+                Size = ClientSize,
                 BackColor = Color.LightBlue
             };
 
