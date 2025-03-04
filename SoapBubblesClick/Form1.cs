@@ -44,13 +44,35 @@ namespace SoapBubblesClick
                 Text = "Game Start",
                 Font = new Font("Arial", 16),
                 Size = new Size(200, 50),
-                Location = new Point((ClientSize.Width - 200) / 2, (ClientSize.Height - 50) / 2),
+                Location = new Point((ClientSize.Width - 200) / 2, (ClientSize.Height - 50) / 2)
             };
             startButton.Click += StartButton_Click;
 
+            // 終了ボタン
+            closeButton = new Button
+            {
+                Text = "終了",
+                Font = new Font("Arial", 16),
+                Size = new Size(200, 50),
+                Location = new Point((ClientSize.Width - 200) / 2, (ClientSize.Height - 100))
+            };
+            closeButton.Click += CloseButton_Click;
+
             //パネルにボタンを追加
             startPanel.Controls.Add(startButton);
+            startPanel.Controls.Add(closeButton);
             Controls.Add(startPanel);
+        }
+
+        //スタート画面を表示するメソッド
+        private void ShowStartScreen()
+        {
+            startPanel.Visible = true; //スタート画面を表示
+            score = 0;
+            timar = 30;
+            scoreLabel.Text = "Score: 0";
+            timerLabel.Text = "Time: 30";
+            isGameOver = false;
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -66,6 +88,11 @@ namespace SoapBubblesClick
             timer1.Start();
             gameTimer.Start();
             
+        }
+
+        private void CloseButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -212,7 +239,8 @@ namespace SoapBubblesClick
                 }
             }
 
-            MessageBox.Show("Time's up! \nScore: " + score, "Game Over");
+            MessageBox.Show("Time's up! \nScore: " + score, "Game Over", MessageBoxButtons.OK);
+            ShowStartScreen(); //スタート画面に戻る
         }
     }
 }
