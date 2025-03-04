@@ -53,7 +53,7 @@
             this.timerLabel.AutoSize = true;
             this.timerLabel.BackColor = System.Drawing.Color.Transparent;
             this.timerLabel.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.timerLabel.Location = new System.Drawing.Point(577, 25);
+            this.timerLabel.Location = new System.Drawing.Point(656, 25);
             this.timerLabel.Name = "timerLabel";
             this.timerLabel.Size = new System.Drawing.Size(108, 30);
             this.timerLabel.TabIndex = 8;
