@@ -12,6 +12,8 @@ namespace SoapBubblesClick
         private Panel startPanel;
         // スタートボタン
         private Button startButton;
+        // ランキングボタン
+        private Button rankingButton;
         // 終了ボタン
         private Button closeButton;
         // シャボン玉
@@ -60,9 +62,20 @@ namespace SoapBubblesClick
                 Text = "Game Start",
                 Font = new Font("Arial", 16),
                 Size = new Size(200, 50),
-                Location = new Point((ClientSize.Width - 200) / 2, (ClientSize.Height - 50) / 2)
+                Location = new Point((ClientSize.Width - 200) / 2, (ClientSize.Height - 250))
             };
             startButton.Click += StartButton_Click;
+
+            // ランキングフォームボタン
+            rankingButton = new Button
+            {
+                Text = "Ranking",
+                Font = new Font("Arial", 16),
+                Size = new Size(200, 50),
+                Location = new Point((ClientSize.Width - 200) / 2,(ClientSize.Height - 175))
+            };
+            rankingButton.Click += RadioButton_Click;
+
 
             // 終了ボタン
             closeButton = new Button
@@ -76,6 +89,7 @@ namespace SoapBubblesClick
 
             //パネルにボタンを追加
             startPanel.Controls.Add(startButton);
+            startPanel.Controls.Add(rankingButton);
             startPanel.Controls.Add(closeButton);
             Controls.Add(startPanel);
         }
@@ -105,6 +119,12 @@ namespace SoapBubblesClick
             timer1.Start();
             gameTimer.Start();
             
+        }
+
+        //ランキングボタンの処理
+        private void RadioButton_Click(object sender, EventArgs e)
+        {
+            ShowRanking();
         }
 
         //終了ボタンの処理
@@ -271,22 +291,14 @@ namespace SoapBubblesClick
 
             //ランキング画面を開く
             ShowRanking();
+            ShowStartScreen();
         }
 
         private void ShowRanking()
         {
-            string rankingText = "【ランキング】\n";
             var scores = scoreManager.GetScores();
-
-            int rank = 1;
-            foreach (var (name, score) in scores)
-            {
-                rankingText += $"{rank}位：{name} - {score}点\n";
-                rank++;
-            }
-
-            MessageBox.Show(rankingText, "スコアランキング");
-            ShowStartScreen(); //スタート画面に戻る
+            RankingForm rankingForm = new RankingForm(scores);
+            rankingForm.ShowDialog(); // モーダル表示
         }
     }
 }
