@@ -46,7 +46,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnClose.BackColor = System.Drawing.Color.AliceBlue;
             this.btnClose.Font = new System.Drawing.Font("メイリオ", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.btnClose.Location = new System.Drawing.Point(454, 332);
             this.btnClose.Name = "btnClose";
