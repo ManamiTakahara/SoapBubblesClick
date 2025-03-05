@@ -265,9 +265,27 @@ namespace SoapBubblesClick
             string playerName = Prompt.ShowDialog("名前を入力してください", "Game Over");
             if (!string.IsNullOrWhiteSpace(playerName))
             {
-                scoreManager.AddScore(playerName); //スコア保存
+                scoreManager.AddScore(playerName, score); //スコア保存
             }
             MessageBox.Show("Time's up! \nScore: " + score, "Game Over", MessageBoxButtons.OK);
+
+            //ランキング画面を開く
+            ShowRanking();
+        }
+
+        private void ShowRanking()
+        {
+            string rankingText = "【ランキング】\n";
+            var scores = scoreManager.GetScores();
+
+            int rank = 1;
+            foreach (var (name, score) in scores)
+            {
+                rankingText += $"{rank}位：{name} - {score}点\n";
+                rank++;
+            }
+
+            MessageBox.Show(rankingText, "スコアランキング");
             ShowStartScreen(); //スタート画面に戻る
         }
     }

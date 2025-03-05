@@ -37,7 +37,7 @@ namespace SoapBubblesClick
         }
 
         //スコアを追加
-        private void AddScore(string name, int score)
+        public void AddScore(string name, int score)
         {
             scores.Add((name, score));
             scores = scores.OrderByDescending(s => s.Score).Take(5).ToList(); //上位5位のみ保存
