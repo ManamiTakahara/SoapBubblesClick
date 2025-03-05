@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using System.Media;
-using System.Drawing.Drawing2D;
 
 namespace SoapBubblesClick
 {
