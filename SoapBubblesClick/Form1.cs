@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
+using System.Media;
+using System.Drawing.Drawing2D;
 
 namespace SoapBubblesClick
 {
@@ -14,19 +16,34 @@ namespace SoapBubblesClick
         private Button startButton;
         // 終了ボタン
         private Button closeButton;
-
         // シャボン玉
         private Random random = new Random();
-
+        //画像ファイル
         private string imageFolderPath = @"Images\"; // フォルダーのパス
         private int timar;
         private bool isGameOver;
+        //スコア
         private int score;
+        //音楽
+        private SoundPlayer player = new SoundPlayer();
+
 
         public Form1()
         {
             InitializeComponent();
             IntalizeStartScreen(); //スタート画面のセットアップ
+            PlayLoopSound(); //BGMの再生
+        }
+
+        private void PlayLoopSound()
+        {
+            //実行ファイルのあるフォルダーにあるwavファイルを参照
+            string soundFilePath = Path.Combine(Application.StartupPath, "natukasiki-omoide.wav");
+            if (File.Exists(soundFilePath))
+            {
+                player.SoundLocation = soundFilePath;
+                player.PlayLooping();
+            }
         }
 
         private void IntalizeStartScreen()
