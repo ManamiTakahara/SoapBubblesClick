@@ -22,6 +22,7 @@ namespace SoapBubblesClick
         private bool isGameOver;
         //スコア
         private int score;
+        private ScoreManager scoreManager = new ScoreManager(); //スコア管理クラスの呼び出し
         //音楽
         private SoundPlayer player = new SoundPlayer();
 
@@ -249,6 +250,7 @@ namespace SoapBubblesClick
             timer1.Stop();
             isGameOver = true;
 
+            // 全てのシャボン玉の移動を停止
             foreach (Control control in Controls)
             {
                 if (control is PictureBox bubble && bubble.Tag is Timer moveTimer)
@@ -259,6 +261,12 @@ namespace SoapBubblesClick
                 }
             }
 
+            // プレイヤー名の入力
+            string playerName = Prompt.ShowDialog("名前を入力してください", "Game Over");
+            if (!string.IsNullOrWhiteSpace(playerName))
+            {
+                scoreManager.AddScore(playerName); //スコア保存
+            }
             MessageBox.Show("Time's up! \nScore: " + score, "Game Over", MessageBoxButtons.OK);
             ShowStartScreen(); //スタート画面に戻る
         }
