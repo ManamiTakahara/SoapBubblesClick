@@ -177,7 +177,7 @@ namespace SoapBubblesClick
 
             // シャボン玉用の移動タイマーを作成
             Timer moveTimer = new Timer();
-            moveTimer.Interval = 50; // 50ミリ秒ごとに移動
+            moveTimer.Interval = 70; // 50ミリ秒ごとに移動
             moveTimer.Tick += (s, e) => MoveBubble(bubble, moveTimer);
             moveTimer.Start();
 
