@@ -179,7 +179,7 @@ namespace SoapBubblesClick
 
             // シャボン玉用の移動タイマーを作成
             Timer moveTimer = new Timer();
-            moveTimer.Interval = 70; // 70ミリ秒ごとに移動
+            moveTimer.Interval = 10; // 10ミリ秒ごとに移動
             moveTimer.Tick += (s, e) => MoveBubble(bubble, moveTimer);
             moveTimer.Start();
 
@@ -226,7 +226,7 @@ namespace SoapBubblesClick
                 if (bubble.Tag is ValueTuple<int, Timer> bubbleData)
                 {
                     int size = bubbleData.Item1;  // タプルの1番目がサイズ
-                    int points = 1500 / size;
+                    int points = 1800 / size;
                     score += points;
                     scoreLabel.Text = "Score: " + score;
                 }
@@ -275,7 +275,7 @@ namespace SoapBubblesClick
             if (bubble == null || isGameOver) return;
 
             // 上へ移動
-            bubble.Top -= 5;
+            bubble.Top -= 3;
 
             // 画面上端に到達したら削除
             if (bubble.Top + bubble.Height < 0)
