@@ -19,7 +19,7 @@ namespace SoapBubblesClick
         // シャボン玉
         private Random random = new Random();
         //画像ファイル
-        private string imageFolderPath = @"Images\"; // フォルダーのパス
+        private string imageFolderPath = @"Image\"; // フォルダーのパス
         private int timar;
         private bool isGameOver;
         //スコア
