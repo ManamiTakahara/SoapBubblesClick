@@ -91,6 +91,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BearkImage\bubble.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="BearkImage\pop1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
