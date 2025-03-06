@@ -34,6 +34,7 @@ namespace SoapBubblesClick
             InitializeComponent();
             IntalizeStartScreen(); //スタート画面のセットアップ
             PlayLoopSound(); //BGMの再生
+            this.DoubleBuffered = true;
         }
 
         private void PlayLoopSound()
@@ -165,7 +166,8 @@ namespace SoapBubblesClick
                 Size = new Size(size, size),
                 Location = new Point(x, y),
                 BackColor = Color.Transparent,
-                SizeMode = PictureBoxSizeMode.StretchImage
+                Image = CreateBubbleImage(size),
+                SizeMode = PictureBoxSizeMode.Zoom //画像サイズの調整
             };
 
             //画像を読み込む
@@ -187,6 +189,28 @@ namespace SoapBubblesClick
 
             Controls.Add(bubble);
         }
+
+        private Bitmap CreateBubbleImage(int size)
+        {
+            Bitmap bmp = new Bitmap(size, size);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver; // 透明処理
+                g.Clear(Color.Transparent);
+
+                using (Brush brush = new System.Drawing.Drawing2D.LinearGradientBrush(
+                    new Rectangle(0, 0, size, size),
+                    Color.LightBlue, Color.White, 45))
+                {
+                    g.FillEllipse(brush, 0, 0, size - 1, size - 1);
+                }
+
+                g.DrawEllipse(Pens.Blue, 0, 0, size - 1, size - 1);
+            }
+            return bmp;
+        }
+
 
         //シャボン玉をクリックしたときの処理
         private void Bubble_Click(object sender, EventArgs e)
