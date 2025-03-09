@@ -9,8 +9,8 @@ namespace SoapBubblesClick
 {
     public class ScoreManager
     {
-        private const string SocoreFilePath = "score.txt"; //スコア保存
-        private List<(string Name, int Score)> scores = new List<(string, int)>(); //スコアリスト
+        private const string filePath = "score.csv"; //スコア保存
+        private List<(string Name, int Score)> scores = new List<(string name, int score)>(); //スコアリスト
 
         public ScoreManager() 
         {
@@ -21,18 +21,21 @@ namespace SoapBubblesClick
         private void LoadScores()
         {
             scores.Clear();
-            if (File.Exists(SocoreFilePath))
+            if (File.Exists(filePath))
             {
-                string[] lines = File.ReadAllLines(SocoreFilePath);
-                foreach (string line in lines)
+                using (StreamReader reader = new StreamReader(filePath))
                 {
-                    string[] parts = line.Split(',');
-                    if (parts.Length == 2 && int.TryParse(parts[1], out int score))
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        scores.Add((parts[0], score));
+                        string[] parts = line.Split(',');
+                        if (parts.Length == 2 && int.TryParse(parts[1], out int score))
+                        {
+                            scores.Add((parts[0], score));
+                        }
                     }
                 }
-                scores = scores.OrderByDescending(s => s.Score).Take(5).ToList(); //上位5位のみ保存
+                scores.Sort((a, b) => b.Score.CompareTo(a.Score)); // 降順ソート
             }
         }
 
@@ -40,21 +43,28 @@ namespace SoapBubblesClick
         public void AddScore(string name, int score)
         {
             scores.Add((name, score));
-            scores = scores.OrderByDescending(s => s.Score).Take(5).ToList(); //上位5位のみ保存
+            scores.Sort((a, b) => b.Score.CompareTo(a.Score)); // 降順ソート
+            if (scores.Count > 5) scores = scores.GetRange(0, 5); // 上位5つのみ保持
             SaveScores();
         }
 
         //スコアを保存する
         private void SaveScores()
         {
-            List<string> lines =scores.Select(s => s.Name).ToList();
-            File.WriteAllLines(SocoreFilePath, lines);
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                foreach (var entry in scores)
+                {
+                    writer.WriteLine($"{entry.Name},{entry.Score}");
+                }
+            }
         }
 
         //スコアリストを取得
         public List<(string Name, int Score)> GetScores()
         {
-            return scores;
+            return new List<(string Name, int Score)>(scores); // コピーを返す
         }
+
     }
 }
