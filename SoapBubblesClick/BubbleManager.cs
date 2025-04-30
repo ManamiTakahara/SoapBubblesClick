@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 namespace SoapBubblesClick
 {
+    // シャボン玉の管理クラス
     public class BubbleManager
     {
         private readonly Form1 form;
@@ -18,6 +19,7 @@ namespace SoapBubblesClick
             this.form = form;
         }
 
+        // シャボン玉を作成するメソッド
         public void CreateBubble()
         {
             int size = random.Next(30, 60);
@@ -52,6 +54,7 @@ namespace SoapBubblesClick
             form.Controls.Add(bubble);
         }
 
+        // シャボン玉の画像を作成するメソッド
         private Bitmap CreateBubbleImage(int size)
         {
             Bitmap bmp = new Bitmap(size, size);
@@ -72,6 +75,7 @@ namespace SoapBubblesClick
             return bmp;
         }
 
+        // シャボン玉がクリックされたときの処理
         private void Bubble_Click(object sender, EventArgs e)
         {
             if (!form.IsGameRunning) return;
@@ -90,6 +94,7 @@ namespace SoapBubblesClick
             }
         }
 
+        // シャボン玉のポップアニメーションを再生するメソッド
         private void PlayPopAnimation(PictureBox bubble)
         {
             int frame = 0;

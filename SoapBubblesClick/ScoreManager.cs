@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SoapBubblesClick
 {
+    // スコア管理クラス
     public class ScoreManager
     {
         private const string filePath = "score.csv"; //スコア保存

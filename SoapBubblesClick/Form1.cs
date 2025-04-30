@@ -37,7 +37,7 @@ namespace SoapBubblesClick
             bubbleManager = new BubbleManager(this);
         }
 
-
+        // サウンドをループ再生するメソッド
         private void PlayLoopSound()
         {
             string soundFilePath = Path.Combine(Application.StartupPath, "natukasiki-omoide.wav");
@@ -48,6 +48,7 @@ namespace SoapBubblesClick
             }
         }
 
+        // スタート画面の初期化
         private void IntalizeStartScreen()
         {
             startPanel = new Panel()
@@ -150,6 +151,7 @@ namespace SoapBubblesClick
             }
         }
 
+        // ゲームオーバー処理
         private void GameOver()
         {
             gameTimer.Stop();
@@ -170,6 +172,7 @@ namespace SoapBubblesClick
             ShowStartScreen();
         }
 
+        // ランキング画面を表示するメソッド
         private void ShowRanking()
         {
             var scores = scoreManager.GetScores();
