@@ -8,38 +8,38 @@ namespace SoapBubblesClick
 {
     public partial class Form1 : Form
     {
-        // スタート画面のパネル
+        // フォームの初期化
         private Panel startPanel;
-        // スタートボタン
         private Button startButton;
-        // ランキングボタン
         private Button rankingButton;
-        // 終了ボタン
         private Button closeButton;
-        // シャボン玉
-        private Random random = new Random();
-        //画像ファイル
-        private string imageFolderPath = @"Image\"; // フォルダーのパス
-        private int timar;
-        private bool isGameOver;
-        //スコア
-        private int score;
-        private ScoreManager scoreManager = new ScoreManager(); //スコア管理クラスの呼び出し
-        //音楽
-        private SoundPlayer player = new SoundPlayer();
 
+        private string imageFolderPath = @"Image\";
+        private int timar;
+
+        // スコア管理クラスのインスタンス
+        private ScoreManager scoreManager = new ScoreManager();
+        private SoundPlayer player = new SoundPlayer();
+        private BubbleManager bubbleManager;
+
+        // ゲームの状態を管理する変数
+        private bool isGameOver;
+        public bool IsGameRunning => !isGameOver;
 
         public Form1()
         {
             InitializeComponent();
-            IntalizeStartScreen(); //スタート画面のセットアップ
-            PlayLoopSound(); //BGMの再生
+            scoreLabel.Visible = false;   // ← ここで非表示にする
+            timerLabel.Visible = false;   // ← ここで非表示にする
+            IntalizeStartScreen();
+            PlayLoopSound();
             this.DoubleBuffered = true;
+            bubbleManager = new BubbleManager(this);
         }
+
 
         private void PlayLoopSound()
         {
-            //実行ファイルのあるフォルダーにあるwavファイルを参照
             string soundFilePath = Path.Combine(Application.StartupPath, "natukasiki-omoide.wav");
             if (File.Exists(soundFilePath))
             {
@@ -50,14 +50,12 @@ namespace SoapBubblesClick
 
         private void IntalizeStartScreen()
         {
-            //スタート画面用のパネル
             startPanel = new Panel()
             {
                 Size = ClientSize,
                 BackColor = Color.LightBlue
             };
 
-            // スタートボタン
             startButton = new Button
             {
                 Text = "Game Start",
@@ -67,18 +65,15 @@ namespace SoapBubblesClick
             };
             startButton.Click += StartButton_Click;
 
-            // ランキングフォームボタン
             rankingButton = new Button
             {
                 Text = "Ranking",
                 Font = new Font("Arial", 16),
                 Size = new Size(200, 50),
-                Location = new Point((ClientSize.Width - 200) / 2,(ClientSize.Height - 175))
+                Location = new Point((ClientSize.Width - 200) / 2, (ClientSize.Height - 175))
             };
             rankingButton.Click += RadioButton_Click;
 
-
-            // 終了ボタン
             closeButton = new Button
             {
                 Text = "終了",
@@ -88,47 +83,50 @@ namespace SoapBubblesClick
             };
             closeButton.Click += CloseButton_Click;
 
-            //パネルにボタンを追加
             startPanel.Controls.Add(startButton);
             startPanel.Controls.Add(rankingButton);
             startPanel.Controls.Add(closeButton);
             Controls.Add(startPanel);
         }
 
-        //スタート画面を表示するメソッド
         private void ShowStartScreen()
         {
-            startPanel.Visible = true; //スタート画面を表示
-            score = 0;
+            startPanel.Visible = true;
+
+            // ↓ ラベル非表示
+            scoreLabel.Visible = false;
+            timerLabel.Visible = false;
+
             timar = 30;
-            scoreLabel.Text = "Score: 0";
+            UpdateScoreLabel(0);
             timerLabel.Text = "Time: 30";
             isGameOver = false;
         }
 
-        //スタートボタンの処理
         private void StartButton_Click(object sender, EventArgs e)
         {
-            //スタート画面を非表示
             startPanel.Visible = false;
 
-            //ゲーム開始
-            timar = 30; //残り時間（秒）
-            isGameOver = false; //ゲーム終了判定
-            score = 0;
+            // ゲーム開始時にラベルを表示
+            scoreLabel.Visible = true;
+            timerLabel.Visible = true;
+
+            timar = 30;
+            isGameOver = false;
+            bubbleManager.ResetScore();
+            UpdateScoreLabel(0);
+            timerLabel.Text = "Time: 30";
+
             timer1.Tick += Timer1_Tick;
             timer1.Start();
             gameTimer.Start();
-            
         }
 
-        //ランキングボタンの処理
         private void RadioButton_Click(object sender, EventArgs e)
         {
             ShowRanking();
         }
 
-        //終了ボタンの処理
         private void CloseButton_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -136,13 +134,11 @@ namespace SoapBubblesClick
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            CreateBubble();
+            bubbleManager.CreateBubble();
         }
 
-        // タイマーの設定
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-
             if (timar > 0)
             {
                 timar--;
@@ -154,166 +150,22 @@ namespace SoapBubblesClick
             }
         }
 
-        //シャボン玉の作成
-        private void CreateBubble()
-        {
-            int size = random.Next(30, 60);
-            int x = random.Next(ClientSize.Width - size);
-            int y = ClientSize.Height - size; // 下から発生
-
-            PictureBox bubble = new PictureBox
-            {
-                Size = new Size(size, size),
-                Location = new Point(x, y),
-                BackColor = Color.Transparent,
-                Image = CreateBubbleImage(size),
-                SizeMode = PictureBoxSizeMode.Zoom //画像サイズの調整
-            };
-
-            //画像を読み込む
-            string bubbleImagePath = Path.Combine(imageFolderPath, "bubble.png");
-            if (File.Exists(bubbleImagePath))
-            {
-                bubble.Image = Image.FromFile(bubbleImagePath);
-            }
-
-            // シャボン玉用の移動タイマーを作成
-            Timer moveTimer = new Timer();
-            moveTimer.Interval = 10; // 10ミリ秒ごとに移動
-            moveTimer.Tick += (s, e) => MoveBubble(bubble, moveTimer);
-            moveTimer.Start();
-
-            // タプルとしてサイズとタイマーの両方をTagに保存
-            bubble.Tag = (Size: size, MoveTimer: moveTimer);
-            bubble.Click += Bubble_Click;
-
-            Controls.Add(bubble);
-        }
-
-        private Bitmap CreateBubbleImage(int size)
-        {
-            Bitmap bmp = new Bitmap(size, size);
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver; // 透明処理
-                g.Clear(Color.Transparent);
-
-                using (Brush brush = new System.Drawing.Drawing2D.LinearGradientBrush(
-                    new Rectangle(0, 0, size, size),
-                    Color.LightBlue, Color.White, 45))
-                {
-                    g.FillEllipse(brush, 0, 0, size - 1, size - 1);
-                }
-
-                g.DrawEllipse(Pens.Blue, 0, 0, size - 1, size - 1);
-            }
-            return bmp;
-        }
-
-
-        //シャボン玉をクリックしたときの処理
-        private void Bubble_Click(object sender, EventArgs e)
-        {
-            // 1. ゲーム終了状態の場合は処理を中断
-            if (isGameOver) return;
-
-            // 2. クリックされたオブジェクトを PictureBox として取得
-            PictureBox bubble = sender as PictureBox;
-            if (bubble != null)
-            {
-                // タプルからサイズを取得
-                if (bubble.Tag is ValueTuple<int, Timer> bubbleData)
-                {
-                    int size = bubbleData.Item1;  // タプルの1番目がサイズ
-                    int points = 1800 / size;
-                    score += points;
-                    scoreLabel.Text = "Score: " + score;
-                }
-
-                //　シャボン玉の移動タイマーも停止
-                if (bubble.Tag is ValueTuple<int, Timer> date)
-                {
-                    date.Item2.Stop();
-                    date.Item2.Dispose();
-                }
-
-                // 6. シャボン玉を画面から削除し、リソースを解放
-                PlayPopAnimation(bubble);
-            }
-        }
-
-        //シャボン玉が消えるときのアニメーション
-        private void PlayPopAnimation(PictureBox bubble)
-        {
-            int frame = 0;
-            Timer animTimer = new Timer { Interval = 25 };
-
-            animTimer.Tick += (s, e) =>
-            {
-                frame++;
-                string popImegePath = Path.Combine(imageFolderPath, $"pop{frame}.png");
-
-                if (File.Exists(popImegePath))
-                {
-                    bubble.Image = Image.FromFile(popImegePath);
-                }
-
-                if (frame >= 3) //3フレームで終了
-                {
-                    animTimer.Stop();
-                    animTimer.Dispose();
-                    Controls.Remove(bubble);
-                    bubble.Dispose();
-                }
-            };
-            animTimer.Start();
-        }
-
-        private void MoveBubble(PictureBox bubble, Timer moveTimer)
-        {
-            if (bubble == null || isGameOver) return;
-
-            // 上へ移動
-            bubble.Top -= 3;
-
-            // 画面上端に到達したら削除
-            if (bubble.Top + bubble.Height < 0)
-            {
-                moveTimer.Stop();
-                moveTimer.Dispose();
-                Controls.Remove(bubble);
-                bubble.Dispose();
-            }
-        }
-
-        //ゲームオーバーの判定
         private void GameOver()
         {
             gameTimer.Stop();
             timer1.Stop();
             isGameOver = true;
 
-            // 全てのシャボン玉の移動を停止
-            foreach (Control control in Controls)
-            {
-                if (control is PictureBox bubble && bubble.Tag is Timer moveTimer)
-                {
-                    moveTimer.Stop();
-                    moveTimer.Dispose();
-                    bubble.Enabled = false; // クリック無効
-                }
-            }
+            bubbleManager.StopAllBubbles();
 
-            // プレイヤー名の入力
             string playerName = Prompt.ShowDialog("名前を入力してください", "Game Over");
             if (!string.IsNullOrWhiteSpace(playerName))
             {
-                scoreManager.AddScore(playerName, score); //スコア保存
+                scoreManager.AddScore(playerName, bubbleManager.Score);
             }
-            MessageBox.Show("Time's up! \nScore: " + score, "Game Over", MessageBoxButtons.OK);
 
-            //ランキング画面を開く
+            MessageBox.Show("Time's up! \nScore: " + bubbleManager.Score, "Game Over");
+
             ShowRanking();
             ShowStartScreen();
         }
@@ -322,7 +174,12 @@ namespace SoapBubblesClick
         {
             var scores = scoreManager.GetScores();
             RankingForm rankingForm = new RankingForm(scores);
-            rankingForm.ShowDialog(); // モーダル表示
+            rankingForm.ShowDialog();
+        }
+
+        public void UpdateScoreLabel(int newScore)
+        {
+            scoreLabel.Text = "Score: " + newScore;
         }
     }
 }
